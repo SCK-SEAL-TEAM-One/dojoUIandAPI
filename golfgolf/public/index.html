@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    Hello World
+    <ul id="films">
+    </ul>
+    <script src="./jquery-3.3.1.min.js"></script>
+    <script>
+    $.ajax({
+        url: "https://ghibliapi.herokuapp.com/films/", success: function (result) {
+            //console.log(result);
+            for (var film of result) {
+                console.log(film);
+                $("#films").append("<li id='" +film.id+ "' onclick='clickItem'>"+film.title+"</li>");
+                
+            }
+            $("li").click(function () {
+                $.ajax({
+                    url: "https://ghibliapi.herokuapp.com/films/" + $("li").attr("id"), success: function (result) {
+                        console.log(result);
+                    }
+                });
+            })
+        }
+    });
+
+    function clickItem(e) {
+        $.ajax({
+            url: "https://ghibliapi.herokuapp.com/films/" + $("li").attr("id"), success: function (result) {
+                console.log(result);
+
+            }
+        });
+    }
+
+    
+    </script>
+</body>
+</html>
